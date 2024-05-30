@@ -27,13 +27,27 @@ namespace LibraryConsoleApp
 
         public void Update(int bookId, string title, string author)
         {
-            throw new NotImplementedException();
+            foreach (var book in books)
+            {
+                if (book.Id == bookId)
+                {
+                    books[book.Id].Title = title;
+                    books[book.Id].Author = author;
+                }
+            }
+
         }
 
 
         public void Delete(int bookId)
         {
-            throw new NotImplementedException();
+            foreach (var book in books)
+            {
+                if (book.Id == bookId)
+                {
+                    books.Remove(book);
+                }
+            }
         }
     }
 }
