@@ -43,11 +43,23 @@ namespace LibraryConsoleApp
         {
             foreach (var book in books)
             {
+                Console.WriteLine(book);
+            }
+
+            foreach (var book in books)
+            {
+                Console.WriteLine(book.Id);
+            }
+
+            foreach (var book in books)
+            {
                 if (book.Id == bookId)
                 {
-                    books.Remove(book);
+                    books.RemoveAt(bookId);
+                    break;
                 }
             }
         }
+    
     }
 }
