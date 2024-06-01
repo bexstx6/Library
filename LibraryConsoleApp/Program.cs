@@ -6,50 +6,62 @@
         {
             IBookService bookService = new BookService();
             IConsoleManager consoleManager = new ConsoleManager();
+            bool exit = false;
 
             Console.WriteLine("Menu:\n 1)Create \n 2)Read \n 3)Update \n 4)Delete ");
 
-            while (true)
+            while (exit == false)
             {
-                var menuAction = (MenuActions)consoleManager.GetInt("Menu action");
-                switch (menuAction)
+                try
                 {
+                    var menuAction = (MenuActions)consoleManager.GetInt("Menu action");
+                    switch (menuAction)
+                    {
 
-                    case MenuActions.Create:
-                        var bookTitle = consoleManager.GetString("Book's Title");
-                        var authorName = consoleManager.GetString("Author's Name");
-                        
-                        var newBookId = bookService.Add(authorName, bookTitle);
-                        consoleManager.WriteLine("Your books's Id: " + newBookId.ToString());
-                        break;
+                        case MenuActions.Create:
+                            var bookTitle = consoleManager.GetString("Book's Title");
+                            var authorName = consoleManager.GetString("Author's Name");
 
-                    case MenuActions.Read:
-                        var bookId = consoleManager.GetInt("Book's Id");
+                            var newBookId = bookService.Add(authorName, bookTitle);
+                            consoleManager.WriteLine("Your books's Id: " + newBookId.ToString());
+                            break;
 
-                        var book = bookService.Get(bookId);
-                        consoleManager.WriteLine(book.ToString());
-                        break;
+                        case MenuActions.Read:
+                            var bookId = consoleManager.GetInt("Book's Id");
 
-                    case MenuActions.Update:
-                        var updatedBookId = consoleManager.GetInt("Book's Id");
-                        var updatedBookTitle = consoleManager.GetString("New Book's Title");
-                        var updatedAuthorName = consoleManager.GetString("New Author's Name");
+                            var book = bookService.Get(bookId);
+                            consoleManager.WriteLine(book.ToString());
+                            break;
 
-                        bookService.Update(updatedBookId, updatedBookTitle, updatedAuthorName);
+                        case MenuActions.Update:
+                            var updatedBookId = consoleManager.GetInt("Book's Id");
+                            var updatedBookTitle = consoleManager.GetString("New Book's Title");
+                            var updatedAuthorName = consoleManager.GetString("New Author's Name");
 
-                        break;
+                            bookService.Update(updatedBookId, updatedBookTitle, updatedAuthorName);
 
-                    case MenuActions.Delete:
-                        var bookIdToDelete= consoleManager.GetInt("Book's Id"); 
-                        bookService.Delete(bookIdToDelete);
+                            break;
 
-                        break;
+                        case MenuActions.Delete:
+                            var bookIdToDelete = consoleManager.GetInt("Book's Id");
+                            bookService.Delete(bookIdToDelete);
 
-                    default:
-                        Console.WriteLine("An Error occured, please try again.");
-                        break;
+                            break;
+
+                        case MenuActions.Exit:
+                            exit = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("An Error occured, please try again.");
+                            break;
+                    }
+
                 }
-
+                catch (Exception)
+                {
+                    consoleManager.WriteLine("An unexpected error occured!!!");
+                }
             }
 
         }
